@@ -37,6 +37,12 @@ Zarek debe encontrar además el órgano vital que reconecte los sentimientos del
 - Zarek debe contestar una pregunta muy difícil que le formulará un duende, deberá demostrar que lee en su tiempo libre
 - Cuando ya casi logra deshacerse del ogro de la puerta, el arma no es eficiente, deberá buscar una solución urgente.
 
+---
+
+Repositorio original:
+https://github.com/MicaelaSignorello/minit
+
+---
 
 
 
