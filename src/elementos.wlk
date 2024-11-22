@@ -12,6 +12,7 @@ object ogro {
     method morir(){
         position = game.at(17, 3)
         image = "ogroMuerto.png"
+		game.sound("MuerteOgro.mp3").play()
     }
 
     method interaccion(){
@@ -34,6 +35,7 @@ object triggerOgro {
         var texto = "                                                                       Necesitas una espada para derrotar al Ogro."
         if (zarek.tieneEspada()){
             texto = "                                                                       Derrota al Ogro ! ! !"
+			
         }
         const mensaje = new Mensaje(text = texto)
         game.addVisual(mensaje)
@@ -160,14 +162,24 @@ object puerta{
 	var property position = game.at(2, 8)
 	var property image = "cerreada.png"
 	var property nombre = "puerta"
+	var property estado = "cerrada"
 
 	method interaccion(){
-		if (zarek.tieneLlave()){
-			image = "abierta.png"
+		if (zarek.tieneLlave()){ 
+			self.abrirPuerta() // Arreglado. Puerta abierta suena en cada interaccion.
 			game.removeVisual(triggerPuerta)
 		} else {
 			zarek.moverAbajo()
 		}
+	}
+
+	method abrirPuerta(){
+		if (estado == "cerrada"){
+			image = "abierta.png"
+			estado = "abierta"
+			game.sound("Puerta.mp3").play()
+		}
+		
 	}
 }
 
@@ -206,6 +218,7 @@ object arbolCaido{
 		if (zarek.tieneHacha()){
 			image = "arbolCaido.png"
 			nombre = "arbolCaido"
+			game.sound("HachaCortaArbol.mp3").play() // Sonido agregado.
 			game.removeVisual(rioCollide)
 			zarek.tieneHacha(false)
 		} else {
@@ -214,7 +227,7 @@ object arbolCaido{
 	}
 }
 
-object triggerArbol1{
+object triggerArbol1{   // Cuando vuelve de agarrar la llave, hace un movimiento en diagonal al pasar por el arbol. Arreglar!!!
 	var property position = game.at(20, 8)
 	var property image = "noImg.png"
 	var property nombre = "arbol"

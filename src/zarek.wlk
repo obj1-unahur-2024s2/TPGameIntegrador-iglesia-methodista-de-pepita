@@ -28,46 +28,54 @@ object zarek {
     method tomarCorazon(){
         self.tieneCorazon(true)
         game.removeVisual(corazon) // Deberia ser: espada.remover() ? ? ?
+        game.sound("RecogeObjetos.mp3").play()
     }
 
 	method tomarHacha(){
 		self.tieneHacha(true)
 		game.removeVisual(hacha)
+        game.sound("RecogeObjetos.mp3").play()
 	}
 
     method tomarEspada(){
         self.tieneEspada(true)
         espada.remover() // Idem metodo anterior, ver cual queda.
         image = "zarekConEspada1.png"   
+        game.sound("RecogeObjetos.mp3").play()
     }
 
     method tomarLlave(){
         self.tieneLlave(true)
         llave.remover()
+        game.sound("RecogeObjetos.mp3").play()
     }
 
     method moverArriba(){
         const tempPos = game.at(position.x(), 10.min(position.y() + 1))
         self.position(tempPos) //game.at(position.x(), 10.min(position.y() + 1))
         image = "zarekEspalda2.png"
+        game.sound("paso1seg.mp3").play()
     }
 
     method moverAbajo(){
         const tempPos = game.at(position.x(), 10.min(position.y() - 1))
         self.position(tempPos)
 		image = if (tieneEspada) "zarekConEspada1.png" else if (tieneHacha) "zarekConHacha.png" else "zarek.png"
+        game.sound("paso1seg.mp3").play()
     }
 
     method moverDer(){
         const tempPos = game.at(position.x() +1, 10.min(position.y()))
         self.position(tempPos)
 		image = "zarekCostado.png"
+        game.sound("paso1seg.mp3").play()
     }
 
     method moverIzq(){
         const tempPos = game.at(position.x() -1, 10.min(position.y()))
         self.position(tempPos)
 	    image = "zarekCostadoIzq.png"
+        game.sound("paso1seg.mp3").play() // Se agrego en todas las direcciones el sonido de paso 22/11/2024.
     }
 
     method position(prediccionPosicion){

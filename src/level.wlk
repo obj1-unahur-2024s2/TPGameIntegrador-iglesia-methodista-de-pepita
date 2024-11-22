@@ -5,14 +5,14 @@ import interfaz.*
 import zarek.*
 
 object pantallaInicial{
-    var property image = "inicioGame.png"
+    var property image = "inicioGame123.png"
     var property position = game.at(0, 0)
 
     method init(){
         game.addVisual(self)
         //mapping.dibujar(estructuraInicio.estructura())
-        keyboard.enter().onPressDo({game.clear(); nivelDificil.init()})
-		keyboard.space().onPressDo({game.clear(); nivelDificil.init()})
+        keyboard.enter().onPressDo({game.sound("InicioJuego.mp3").play();game.clear(); nivelDificil.init()})
+		keyboard.space().onPressDo({game.sound("InicioJuego.mp3").play();game.clear(); nivelDificil.init()})
     }
 }
 
@@ -76,7 +76,9 @@ object gameOver {
     var property position = game.at(0, 0)
 
     method init(){
+        game.removeTickEvent("tiempo")
         game.clear()
+        game.sound("Perdiste.mp3").play()
         game.addVisual(self)
         //  Enter para reiniciar
         keyboard.space().onPressDo({game.clear(); nivelDificil.init()})
@@ -89,7 +91,9 @@ object gameEnd {
     var property position = game.at(0, 0)
 
     method init(){
-        //game.clear()
+        game.clear() // Descomentado porque se podia seguir moviendo Zarek haciendo ruidos.
+        game.removeTickEvent("tiempo")
+        game.sound("Ganar.mp3").play()
         game.addVisual(self)
         keyboard.enter().onPressDo({game.stop()})
         keyboard.space().onPressDo({game.stop()})
