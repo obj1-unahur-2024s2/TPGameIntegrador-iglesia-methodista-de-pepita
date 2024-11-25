@@ -9,6 +9,12 @@ object pantallaInicial{
     var property position = game.at(0, 0)
 
     method init(){
+        zarek.iniciar()
+        ogro.iniciar()
+        duende.iniciar()
+        puerta.iniciar()
+        arbolRio.iniciar() // Son para el reinicio de nivel, se pueden cambiar de lugar.
+        
         game.addVisual(self)
         //mapping.dibujar(estructuraInicio.estructura())
         keyboard.enter().onPressDo({game.sound("InicioJuego.mp3").play();game.clear(); nivelDificil.init()})
@@ -28,7 +34,7 @@ class Nivel{
         game.addVisual(llave)
         game.addVisual(puerta)
 		game.addVisual(hacha)
-		game.addVisual(arbolCaido)
+		game.addVisual(arbolRio)
 
         game.addVisual(triggerOgro)
         game.addVisual(triggerPuerta)
@@ -81,8 +87,10 @@ object gameOver {
         game.sound("Perdiste.mp3").play()
         game.addVisual(self)
         //  Enter para reiniciar
-        keyboard.space().onPressDo({game.clear(); nivelDificil.init()})
-        keyboard.enter().onPressDo({game.clear(); nivelDificil.init()})
+        //keyboard.space().onPressDo({game.clear(); nivelDificil.init()})
+        //keyboard.enter().onPressDo({game.clear(); nivelDificil.init()})
+        // R para reiniciar 25/11/2024
+        keyboard.r().onPressDo({game.clear(); game.stop(); pantallaInicial.init(); game.start()})
     }
 }
 
@@ -95,7 +103,11 @@ object gameEnd {
         game.removeTickEvent("tiempo")
         game.sound("Ganar.mp3").play()
         game.addVisual(self)
-        keyboard.enter().onPressDo({game.stop()})
-        keyboard.space().onPressDo({game.stop()})
+        //keyboard.enter().onPressDo({game.stop()})
+        //keyboard.space().onPressDo({game.stop()})
+
+        // Para reiniciar:
+        keyboard.space().onPressDo({game.clear(); game.stop(); pantallaInicial.init(); game.start()})
+        keyboard.enter().onPressDo({game.clear(); game.stop(); pantallaInicial.init(); game.start()})
     }
 }

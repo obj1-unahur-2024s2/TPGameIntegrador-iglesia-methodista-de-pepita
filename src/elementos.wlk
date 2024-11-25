@@ -7,7 +7,12 @@ import level.*
 object ogro {
     var property position = game.at(16, 2)
     var property image = "ogro.png"
-    var property nombre = "ogro"
+    //var property nombre = "ogro"
+	// Comentado para generar colision
+	method iniciar(){
+		position = game.at(16, 2)
+		image = "ogro.png"
+	}
 
     method morir(){
         position = game.at(17, 3)
@@ -32,10 +37,10 @@ object triggerOgro {
     var property nombre = "invisible"
 
     method msg(){
-        var texto = "                                                                       Necesitas una espada para derrotar al Ogro."
+        var texto = "                                                                         Necesitas una espada para derrotar al Ogro."
         if (zarek.tieneEspada()){
             texto = "                                                                       Derrota al Ogro ! ! !"
-			
+			ogro.interaccion()
         }
         const mensaje = new Mensaje(text = texto)
         game.addVisual(mensaje)
@@ -64,7 +69,7 @@ object triggerPrincipe1{
 	var property nombre = "principe"
 
 	method msg(){
-		var texto = "                                                                       Necesitas el corazón para conquistar al principe ♥."
+		var texto = "                                                                             Necesitas el corazón para conquistar al principe ♥."
 
 		if (zarek.tieneCorazon()){
 			texto = "                                                                       ♥ Conquistaste al principe ♥"
@@ -82,7 +87,7 @@ object triggerPrincipe2{
 	var property nombre = "principe"
 
 	method msg(){
-		var texto = "                                                                       Necesitas el corazón para conquistar al principe ♥."
+		var texto = "                                                                             Necesitas el corazón para conquistar al principe ♥."
 
 		if (zarek.tieneEspada()){
 			texto = "                                                                       ♥ Conquistaste al principe ♥"
@@ -97,6 +102,10 @@ object triggerPrincipe2{
 object duende {
 	var property position = game.at(2, 1)
 	var property image = "duende.png"
+
+	method iniciar(){
+		position = game.at(2, 1)
+	}
 }
 
 object triggerDuende {
@@ -104,8 +113,14 @@ object triggerDuende {
 	var property image = "noImg.png"
 	var property nombre = "invisible"
 
+	method iniciar(){
+		position = game.at(3, 1)
+		image = "noImg.png"
+		nombre = "invisible"
+	}
+
 	method msg(){
-    	var texto = "                                                                       Decime los primeros 3 decimales de π (pi)."
+    	var texto = "                                                                         Decime los primeros 3 decimales de π (pi)."
 		image = "noNum.png"
 
 		if(image == "noNum.png"){
@@ -161,8 +176,15 @@ object hacha {
 object puerta{
 	var property position = game.at(2, 8)
 	var property image = "cerreada.png"
-	var property nombre = "puerta"
+	//var property nombre = "puerta"
 	var property estado = "cerrada"
+
+	method iniciar(){
+		position = game.at(2, 8)
+		image = "cerreada.png"
+		//nombre = "puerta"
+		estado = "cerrada"
+	}
 
 	method interaccion(){
 		if (zarek.tieneLlave()){ 
@@ -175,12 +197,19 @@ object puerta{
 
 	method abrirPuerta(){
 		if (estado == "cerrada"){
-			image = "abierta.png"
 			estado = "abierta"
+			game.removeVisual(self)
+			game.addVisual(puertaAbierta)
 			game.sound("Puerta.mp3").play()
 		}
 		
 	}
+}
+
+object puertaAbierta{
+	var property position = game.at(2, 8)
+	var property image = "abierta.png"
+	var property nombre = "puertaAbierta"
 }
 
 object triggerPuerta{
@@ -192,6 +221,7 @@ object triggerPuerta{
     	var texto = "                                                                       Necesitas la llave para abrir la puerta."
     	if (zarek.tieneLlave()){
     	    texto = "                                                                       Puede Avanzar"
+			puerta.interaccion()
     	}
     	const mensaje = new Mensaje(text = texto)
     	game.addVisual(mensaje)
@@ -209,22 +239,32 @@ object llave{
 	}
 }
 
-object arbolCaido{
+object arbolRio{ // Se cambio el nombre.
 	var property position = game.at(20, 9)
 	var property image = "arbol.png"
-	var property nombre = "arbolCaido"
+
+	method iniciar(){
+		position = game.at(20, 9)
+	  	image = "arbol.png"
+	}
 
 	method interaccion(){
-		if (zarek.tieneHacha()){
-			image = "arbolCaido.png"
-			nombre = "arbolCaido"
+		if (zarek.tieneHacha()){	
 			game.sound("HachaCortaArbol.mp3").play() // Sonido agregado.
+			game.removeVisual(self)
+			game.addVisual(arbolCaido) // Se agrega el visual del Objeto Arbol caido.
 			game.removeVisual(rioCollide)
 			zarek.tieneHacha(false)
 		} else {
 			zarek.moverAbajo()
 		}
 	}
+}
+
+object arbolCaido{ // Agregado para evitar traspaso de paredes. 25/11/2024
+	var property position = game.at(20, 9)
+	var property image = "arbolCaido.png"
+	var property nombre = "arbolCaido"
 }
 
 object triggerArbol1{   // Cuando vuelve de agarrar la llave, hace un movimiento en diagonal al pasar por el arbol. Arreglar!!!
@@ -239,7 +279,7 @@ object triggerArbol1{   // Cuando vuelve de agarrar la llave, hace un movimiento
 			texto = "                                                                       Corta el arbol ! ! !"
 			game.removeVisual(self)
 			game.removeVisual(triggerArbol2)
-
+			arbolRio.interaccion()
 		}
 
 		const mensaje = new Mensaje(text = texto)
@@ -260,6 +300,7 @@ object triggerArbol2{
 			texto = "                                                                       Corta el arbol ! ! !"
 			game.removeVisual(self)
 			game.removeVisual(triggerArbol1)
+			arbolRio.interaccion()
 		}
 
 		const mensaje = new Mensaje(text = texto)

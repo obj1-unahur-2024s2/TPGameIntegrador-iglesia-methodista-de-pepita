@@ -35,16 +35,17 @@ object paleta {
 
 object reloj {
 	var tiempo = 60
+    var property textColor = paleta.verde()
 	
 	method text() = tiempo.toString()
-    method textColor() = paleta.verde()
+    //method textColor() = paleta.verde()
     
 	method position() = game.at(0, game.height()-1)
 	
 	method pasarTiempo() {
-		tiempo = 0.max(tiempo - 1) 
+		self.avisarPocoTiempo()
+        tiempo = 0.max(tiempo - 1)
         self.detenerEn(0)
-
         if (tiempo == 0){
             gameOver.init()
         }
@@ -52,7 +53,7 @@ object reloj {
 	method iniciar(){
 		tiempo = 60
 		game.onTick(1000, "tiempo", {self.pasarTiempo()})
-        
+        textColor = paleta.verde()
 	}
 	method detenerEn(cantidad){
         if(cantidad == tiempo)
@@ -62,7 +63,14 @@ object reloj {
 
     method perderJuegoPorReloj(){
         if (tiempo == 0){
+            textColor = paleta.negro()
             gameOver.init()
+        }
+    }
+
+    method avisarPocoTiempo(){
+        if (tiempo == 11){
+            textColor = paleta.rojo()
         }
     }
 }

@@ -15,6 +15,15 @@ object zarek {
 
     //var property orientacion = 0
 
+    //Agregado para Reiniciar 25/11/2024
+    method iniciar(){
+        tieneCorazon = false
+        tieneEspada = false
+        tieneLlave = false
+        tieneHacha = false
+        position = game.at(6, 6)
+    }
+
     method leerMensaje(unPersonaje){
         unPersonaje.msg()
     }
@@ -100,10 +109,10 @@ object controlDeColisiones {
         game.onCollideDo(llave, {zarek => zarek.tomarLlave()})
         game.onCollideDo(hacha, {zarek => zarek.tomarHacha()})
 
-        game.onCollideDo(ogro, {zarek => zarek.interactuarCon(ogro)})
-        game.onCollideDo(puerta, {zarek => zarek.interactuarCon(puerta)})
-		game.onCollideDo(arbolCaido, {zarek => zarek.interactuarCon(arbolCaido)})
-		game.onCollideDo(principe, {zarek => zarek.interactuarCon(principe)})
+        //game.onCollideDo(ogro, {zarek => zarek.interactuarCon(ogro)})
+        //game.onCollideDo(puerta, {zarek => zarek.interactuarCon(puerta)})
+		//game.onCollideDo(arbolRio, {zarek => zarek.interactuarCon(arbolCaido)})
+		game.onCollideDo(principe, {zarek => zarek.interactuarCon(principe)}) // Se le debe agregar trigger ? para que quede igual al resto?
 
         //  msgTriggers
         //game.onCollideDo(zarek, {zarek => zarek.mensajeOgro()})
