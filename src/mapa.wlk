@@ -33,7 +33,7 @@ import interfaz.*
 		]
 	}
 
-	object estructuraInicio{
+	object estructuraInicio{ //	Deprecated
 		var property estructura = [
 			1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ,
 			    
@@ -61,21 +61,21 @@ import interfaz.*
 		]
 }
 
-/* pre pantalla : encontra la forma de rescatar al principe
- ///SPOILER///
- 1 zarek es una princesa que quiere rescatar a su principe atrapado por un 
-ogro(el principe no pude puede combatirlo porque le da ansiedad el color verde ) 
-para eso debe hallar la llave de la armeria donde se encuentra la espada.
-lamentablemente la llave se encuentra en una isla. para alcanzarla 
-debera derribar el arbol cercano al rio y usarlo como puente. Para tomar la llave 
-debera cruzar rio derribando el abol cercano usando el hacha, que esta en posesion de un duende!
-Para que el duende le de el hacha debera contestar una pregunta. 
-Logrado todo esto tomara la espada para derrotar al ogro y salvar al principe.
-Pero el principe no va estar convencido asi que zarek debera conquistarlo, para eso debera tener
-el corazon del principe, que como es ditraido, se lo dejo por algun lugar del bosque. 
+/*	pre pantalla : encontra la forma de rescatar al principe
+	 ///SPOILER///
+	 1 zarek es una princesa que quiere rescatar a su principe atrapado por un 
+	ogro(el principe no pude puede combatirlo porque le da ansiedad el color verde ) 
+	para eso debe hallar la llave de la armeria donde se encuentra la espada.
+	lamentablemente la llave se encuentra en una isla. para alcanzarla 
+	debera derribar el arbol cercano al rio y usarlo como puente. Para tomar la llave 
+	debera cruzar rio derribando el abol cercano usando el hacha, que esta en posesion de un duende!
+	Para que el duende le de el hacha debera contestar una pregunta. 
+	Logrado todo esto tomara la espada para derrotar al ogro y salvar al principe.
+	Pero el principe no va estar convencido asi que zarek debera conquistarlo, para eso debera tener
+	el corazon del principe, que como es ditraido, se lo dejo por algun lugar del bosque. 
 
 
-Dificil: 
+	Dificil: 
 		tiempo -30%
 		El corazon, va estar en la jaula de pepita una vez la liberen. 
 		La prgunta del duende es mas dificil
@@ -93,34 +93,33 @@ object mapping{
 	method dibujar(unMapa){
 		
         var x = 0
-        var y = 11
+        var y = game.height() - 1
         	
         unMapa.forEach{ rastreador =>
            
-            if (x == 26){
+            if (x == game.width()){
                 x = 0
                 y -= 1
-                }
-                
-            //Pared (Opera, y está bien):
-            if(rastreador == 1){
-                const pared = new TipoPared(position = game.at(x, y), nombre = "pared", image = "pedruzco.png")
-                game.addVisual(pared)
             }
+                
+            if(rastreador == 1){
+            	const pared = new Piedra(position = game.at(x, y), image = "pedruzco.png")
+            	game.addVisual(pared)
+            }
+
 			if (rastreador == 2){
 				const arbol = new Arbol(position = game.at(x, y), image = "arbol.png")
 				game.addVisual(arbol)
-			} // Ver si hace falta pasarle imagen y nombre.
+			}
        		x += 1
         }
     }
 }
+
 object isla{
 	method init(){
 		game.addVisual(new Rio(position = game.at(21, 11), image = "rioVertical.png"))
 		game.addVisual(new Rio(position = game.at(21, 10), image = "rioVertical.png"))
-	
-		//game.addVisual(new Rio(position = game.at(21, 9), image = "rioVertical.png"))
 		game.addVisual(new Rio(position = game.at(21, 8), image = "rioVertical.png"))
 
 		game.addVisual(new Rio(position = game.at(21, 7), image = "rioCodo.png"))
@@ -133,13 +132,8 @@ object isla{
 }
 
 
-class TipoPared {
-	var property position
-	var property nombre
-	var property image
-}
+
 
 //	Se puede hacer clase "elementosDelMapa" y usar como interfaz.
 //	Para: Corazon, prision, espada, rio, piedra, arbol
-
 //	Pasar a archivo "paredes.wlk", renombrar a "elementos".

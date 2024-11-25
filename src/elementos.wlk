@@ -7,7 +7,7 @@ import level.*
 object ogro {
     var property position = game.at(16, 2)
     var property image = "ogro.png"
-    //var property nombre = "ogro"
+    var property esColisionable = true
 	// Comentado para generar colision
 	method iniciar(){
 		position = game.at(16, 2)
@@ -34,7 +34,7 @@ object ogro {
 object triggerOgro {
     var property position = game.at(15, 2)
     var property image = "noImg.png"
-    var property nombre = "invisible"
+    var property esColisionable = false
 
     method msg(){
         var texto = "                                                                         Necesitas una espada para derrotar al Ogro."
@@ -52,7 +52,7 @@ object triggerOgro {
 object principe {
     var property position = game.at(21, 4)
     var property image = "principe2.png"
-	var property nombre = "principe"
+	var property esColisionable = false
 
 	method interaccion(){
 		if (zarek.tieneCorazon()){
@@ -66,7 +66,7 @@ object principe {
 object triggerPrincipe1{
 	var property position = game.at(21, 3)
 	var property image = "noImg.png"
-	var property nombre = "principe"
+	var property esColisionable = false
 
 	method msg(){
 		var texto = "                                                                             Necesitas el corazón para conquistar al principe ♥."
@@ -84,7 +84,7 @@ object triggerPrincipe1{
 object triggerPrincipe2{
 	var property position = game.at(20, 4)
 	var property image = "noImg.png"
-	var property nombre = "principe"
+	var property esColisionable = false
 
 	method msg(){
 		var texto = "                                                                             Necesitas el corazón para conquistar al principe ♥."
@@ -102,6 +102,7 @@ object triggerPrincipe2{
 object duende {
 	var property position = game.at(2, 1)
 	var property image = "duende.png"
+	var property esColisionable = true
 
 	method iniciar(){
 		position = game.at(2, 1)
@@ -111,7 +112,7 @@ object duende {
 object triggerDuende {
 	var property position = game.at(3, 1)
 	var property image = "noImg.png"
-	var property nombre = "invisible"
+	var property esColisionable = false
 
 	method iniciar(){
 		position = game.at(3, 1)
@@ -131,12 +132,14 @@ object triggerDuende {
 					image = "14.png"
 					keyboard.num1().onPressDo({
 						image = "141.png"
-						duende.position(game.at(3, 3))
+						//duende.position(game.at(3, 3))
+						game.removeVisual(duende)
 						game.removeVisual(self)
 					})
 				})
 			})
 		}
+		//game.removeVisual(self)
     	const mensaje = new Mensaje(text = texto)
     	game.addVisual(mensaje)
     	game.schedule(4000, {game.removeVisual(mensaje)})
@@ -146,7 +149,7 @@ object triggerDuende {
 object corazon {
     var property position = game.at(12, 9)
     var property image = "corazon.png"
-	var property nombre = "corazon"
+	var property esColisionable = false
 
 	method remover(){
 		game.removeVisual(self)
@@ -156,7 +159,7 @@ object corazon {
 object espada {
 	var property position = game.at(4, 10)
 	var property image = "espada.png"
-	var property nombre = "espada"
+	var property esColisionable = false
 
 	method remover(){
 		game.removeVisual(self)
@@ -166,7 +169,7 @@ object espada {
 object hacha {
 	var property position = game.at(1, 1)
 	var property image = "hacha.png"
-	var property nombre = "hacha"
+	var property esColisionable = false
 
 	method remover(){
 		game.removeVisual(self)
@@ -176,7 +179,7 @@ object hacha {
 object puerta{
 	var property position = game.at(2, 8)
 	var property image = "cerreada.png"
-	//var property nombre = "puerta"
+	var property esColisionable = true
 	var property estado = "cerrada"
 
 	method iniciar(){
@@ -209,13 +212,13 @@ object puerta{
 object puertaAbierta{
 	var property position = game.at(2, 8)
 	var property image = "abierta.png"
-	var property nombre = "puertaAbierta"
+	var property esColisionable = false
 }
 
 object triggerPuerta{
 	var property position = game.at(2, 7)
 	var property image = "noImg.png"
-	var property nombre = "triggerPuerta"
+	var property esColisionable = false
 
 	method msg(){
     	var texto = "                                                                       Necesitas la llave para abrir la puerta."
@@ -232,7 +235,7 @@ object triggerPuerta{
 object llave{
 	var property position = game.at(23, 9)
 	var property image = "llave.png"
-	var property nombre = "llave"
+	var property esColisionable = false
 
 	method remover(){
 		game.removeVisual(self)
@@ -242,6 +245,7 @@ object llave{
 object arbolRio{ // Se cambio el nombre.
 	var property position = game.at(20, 9)
 	var property image = "arbol.png"
+	var property esColisionable = true
 
 	method iniciar(){
 		position = game.at(20, 9)
@@ -264,13 +268,13 @@ object arbolRio{ // Se cambio el nombre.
 object arbolCaido{ // Agregado para evitar traspaso de paredes. 25/11/2024
 	var property position = game.at(20, 9)
 	var property image = "arbolCaido.png"
-	var property nombre = "arbolCaido"
+	var property esColisionable = false
 }
 
 object triggerArbol1{   // Cuando vuelve de agarrar la llave, hace un movimiento en diagonal al pasar por el arbol. Arreglar!!!
 	var property position = game.at(20, 8)
 	var property image = "noImg.png"
-	var property nombre = "arbol"
+	var property esColisionable = false
 
 	method msg(){
 		var texto = "                                                                       Necesito un hacha para cortar el arbol."
@@ -291,7 +295,7 @@ object triggerArbol1{   // Cuando vuelve de agarrar la llave, hace un movimiento
 object triggerArbol2{
 	var property position = game.at(19, 9)
 	var property image = "noImg.png"
-	var property nombre = "arbol"
+	var property esColisionable = false
 
 	method msg(){
 		var texto = "                                                                       Necesito un hacha para cortar el arbol."
@@ -312,15 +316,23 @@ object triggerArbol2{
 object rioCollide {
 	var property position = game.at(21, 9)
 	var property image = "rioVertical.png"
-	var property nombre = "rioCollide"
+	var property esColisionable = false
+}
+
+class Piedra {
+	var property position
+	var property esColisionable = true
+	var property image = "pedruzco.png"
 }
 
 class Arbol{
 	var property position
 	var property image = "arbol.png"
+	var property esColisionable = true
 }
 
 class Rio{
 	var property position
 	var property image
+	var property esColisionable = true
 }

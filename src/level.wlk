@@ -90,7 +90,7 @@ object gameOver {
         //keyboard.space().onPressDo({game.clear(); nivelDificil.init()})
         //keyboard.enter().onPressDo({game.clear(); nivelDificil.init()})
         // R para reiniciar 25/11/2024
-        keyboard.r().onPressDo({game.clear(); game.stop(); pantallaInicial.init(); game.start()})
+        keyboard.r().onPressDo({game.clear(); game.stop(); nivelDificil.init(); game.start()})
     }
 }
 

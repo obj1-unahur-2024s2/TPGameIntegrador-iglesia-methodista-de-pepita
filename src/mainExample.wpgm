@@ -9,12 +9,8 @@ program minit{
 	game.title("Minit!")
 	game.height(12)
 	game.width(26)
-	//game.boardGround("background.png")
-	//mapping.dibujar(estructuraInicio.estructura())
 	
 	pantallaInicial.init()
-
-	//nivelDificil.init()
 
 	game.start()
 }
