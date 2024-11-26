@@ -1,9 +1,9 @@
 import wollok.game.*
 import elementos.*
-import mapa.*
 import interfaz.*
 import level.*
 import zarek.*
+import mapa.*
 
 program minit{
 	game.title("Minit!")

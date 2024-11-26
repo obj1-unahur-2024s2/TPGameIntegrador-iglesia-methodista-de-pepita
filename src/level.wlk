@@ -1,8 +1,8 @@
 import wollok.game.*
-import mapa.*
 import elementos.*
 import interfaz.*
 import zarek.*
+import mapa.*
 
 object pantallaInicial{
     var property image = "inicioGame123.png"
@@ -16,9 +16,9 @@ object pantallaInicial{
         arbolRio.iniciar() // Son para el reinicio de nivel, se pueden cambiar de lugar.
         
         game.addVisual(self)
-        //mapping.dibujar(estructuraInicio.estructura())
-        keyboard.enter().onPressDo({game.sound("InicioJuego.mp3").play();game.clear(); nivelDificil.init()})
-		keyboard.space().onPressDo({game.sound("InicioJuego.mp3").play();game.clear(); nivelDificil.init()})
+        keyboard.enter().onPressDo({game.sound("InicioJuego.mp3").play(); game.clear(); nivelDificil.init()})
+		keyboard.space().onPressDo({game.sound("InicioJuego.mp3").play(); game.clear(); nivelFacil.init()})
+
     }
 }
 
@@ -27,10 +27,9 @@ class Nivel{
         game.addVisual(self)
 
         game.addVisual(corazon)
-        game.addVisual(ogro)
+        ogro.iniciar()
         game.addVisual(principe)
         game.addVisual(espada)
-        game.addVisual(duende)
         game.addVisual(llave)
         game.addVisual(puerta)
 		game.addVisual(hacha)
@@ -38,7 +37,6 @@ class Nivel{
 
         game.addVisual(triggerOgro)
         game.addVisual(triggerPuerta)
-		game.addVisual(triggerDuende)
 		game.addVisual(triggerArbol1)
 		game.addVisual(triggerArbol2)
 		game.addVisual(rioCollide)
@@ -51,7 +49,7 @@ class Nivel{
 
 		isla.init()
 
-        game.addVisual(zarek)
+        zarek.iniciar()
         controlDeColisiones.init()
 
       	keyConfig.init()
@@ -59,10 +57,13 @@ class Nivel{
 }
 
 object nivelFacil inherits Nivel (){
+    var property image = "backgroundNivel.png"
+    var property position = game.at(0, 0)
+
     override method init(){
         super()
         game.boardGround("backgroundNivel.png")
-        mapping.dibujar(estructuraDificil.estructura())
+        mapping.dibujar(estructuraFacil.estructura())
     }
 }
 
@@ -72,8 +73,11 @@ object nivelDificil inherits Nivel(){
 
     override method init(){
         super()
-        mapping.dibujar(estructuraDificil.estructura())
+        game.addVisual(duende)
+		game.addVisual(triggerDuende)
 
+        game.boardGround("backgroundNivel.png")
+        mapping.dibujar(estructuraDificil.estructura())
     }
 }
 
@@ -87,10 +91,10 @@ object gameOver {
         game.sound("Perdiste.mp3").play()
         game.addVisual(self)
         //  Enter para reiniciar
-        //keyboard.space().onPressDo({game.clear(); nivelDificil.init()})
-        //keyboard.enter().onPressDo({game.clear(); nivelDificil.init()})
-        // R para reiniciar 25/11/2024
-        keyboard.r().onPressDo({game.clear(); game.stop(); nivelDificil.init(); game.start()})
+        //  keyboard.space().onPressDo({game.clear(); nivelDificil.init()})
+        //  keyboard.enter().onPressDo({game.clear(); nivelDificil.init()})
+        //  R para reiniciar 25/11/2024
+        keyboard.r().onPressDo({game.clear(); game.stop(); nivelDificil.init(); game.start(); zarek.iniciar()})
     }
 }
 

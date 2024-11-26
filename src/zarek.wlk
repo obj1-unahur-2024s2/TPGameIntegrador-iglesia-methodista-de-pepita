@@ -1,7 +1,7 @@
 import wollok.game.*
-import mapa.*
-import interfaz.*
 import elementos.*
+import interfaz.*
+import mapa.*
 
 object zarek {
     var property image = "zarek.png"
@@ -22,8 +22,9 @@ object zarek {
         tieneLlave = false
         tieneHacha = false
         position = game.at(6, 6)
+        game.addVisual(self)
     }
-
+    
     method leerMensaje(unPersonaje){
         unPersonaje.msg()
     }
@@ -36,7 +37,7 @@ object zarek {
 
     method tomarCorazon(){
         self.tieneCorazon(true)
-        game.removeVisual(corazon) // Deberia ser: espada.remover() ? ? ?
+        game.removeVisual(corazon) // Deberia ser: espada.remover() ? ?
         game.sound("RecogeObjetos.mp3").play()
     }
 
@@ -93,7 +94,7 @@ object zarek {
 	    //Colisiones:
 	
 		//Se llena una colección con los objetos que hayan en la posición predecida, se filtra a través de un identificador:
-		area = game.getObjectsIn(prediccionPosicion).filter({ visual => visual.esColisionable() == true})
+		area = game.getObjectsIn(prediccionPosicion).filter({ visual => visual.esColisionable()})
 			
 		//Si no se detecta ninguna pared con la colección, simplemente pase a la posición predecida:
 		if (area.size() == 0){

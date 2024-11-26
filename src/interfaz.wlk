@@ -32,9 +32,8 @@ object paleta {
     const property negro = "00000000"
 }
 
-
 object reloj {
-	var tiempo = 60
+    var tiempo = 60
     var property textColor = paleta.verde()
 	
 	method text() = tiempo.toString()
@@ -51,7 +50,7 @@ object reloj {
         }
 	}
 	method iniciar(){
-		tiempo = 60
+		tiempo = 50
 		game.onTick(1000, "tiempo", {self.pasarTiempo()})
         textColor = paleta.verde()
 	}

@@ -1,15 +1,17 @@
 import wollok.game.*
-import mapa.*
 import interfaz.*
 import zarek.*
 import level.*
+import mapa.*
+
 
 object ogro {
     var property position = game.at(16, 2)
     var property image = "ogro.png"
     var property esColisionable = true
-	// Comentado para generar colision
+
 	method iniciar(){
+		game.addVisual(self)
 		position = game.at(16, 2)
 		image = "ogro.png"
 	}
@@ -117,35 +119,41 @@ object triggerDuende {
 	method iniciar(){
 		position = game.at(3, 1)
 		image = "noImg.png"
-		nombre = "invisible"
 	}
 
 	method msg(){
     	var texto = "                                                                         Decime los primeros 3 decimales de π (pi)."
-		image = "noNum.png"
-
-		if(image == "noNum.png"){
-			position = game.at(8, 4)
-			keyboard.num1().onPressDo({
-				image = "1.png"
-				keyboard.num4().onPressDo({
-					image = "14.png"
-					keyboard.num1().onPressDo({
-						image = "141.png"
-						//duende.position(game.at(3, 3))
-						game.removeVisual(duende)
-						game.removeVisual(self)
-					})
-				})
-			})
-		}
-		//game.removeVisual(self)
     	const mensaje = new Mensaje(text = texto)
-    	game.addVisual(mensaje)
-    	game.schedule(4000, {game.removeVisual(mensaje)})
+
+		game.addVisual(mensaje)
+		game.schedule(4000, {game.removeVisual(mensaje)})
+
+		game.addVisual(input)
+		input.init()
 	}
 }
 
+object input{
+	var property position = game.at(8, 4)
+	var property image = "noNum.png"
+	var property esColisionable = false
+
+	method init(){		
+		image = "noNum.png"
+		
+		keyboard.num1().onPressDo({
+			image = "1.png"
+			keyboard.num4().onPressDo({
+				image = "14.png"
+				keyboard.num1().onPressDo({
+					image = "141.png"
+					game.removeVisual(duende)
+					image = "noImg.png"
+				})
+			})
+		})
+	}
+}
 object corazon {
     var property position = game.at(12, 9)
     var property image = "corazon.png"
