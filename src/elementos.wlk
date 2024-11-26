@@ -195,6 +195,8 @@ object puerta{
 		image = "cerreada.png"
 		//nombre = "puerta"
 		estado = "cerrada"
+		esColisionable = true
+		game.removeVisual(puertaAbierta)
 	}
 
 	method interaccion(){
@@ -212,6 +214,7 @@ object puerta{
 			game.removeVisual(self)
 			game.addVisual(puertaAbierta)
 			game.sound("Puerta.mp3").play()
+			esColisionable = false
 		}
 		
 	}

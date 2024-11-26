@@ -9,11 +9,11 @@ object pantallaInicial{
     var property position = game.at(0, 0)
 
     method init(){
-        zarek.iniciar()
-        ogro.iniciar()
-        duende.iniciar()
-        puerta.iniciar()
-        arbolRio.iniciar() // Son para el reinicio de nivel, se pueden cambiar de lugar.
+        // zarek.iniciar()
+        // ogro.iniciar()
+        // duende.iniciar()
+        // puerta.iniciar()
+        // arbolRio.iniciar()
         
         game.addVisual(self)
         keyboard.enter().onPressDo({game.sound("InicioJuego.mp3").play(); game.clear(); nivelDificil.init()})
@@ -23,11 +23,16 @@ object pantallaInicial{
 }
 
 class Nivel{
+    var property estado = "nojugando" 
     method init(){
+        estado = "nojugando"
+        
+        
         game.addVisual(self)
 
         game.addVisual(corazon)
-        ogro.iniciar()
+
+        
         game.addVisual(principe)
         game.addVisual(espada)
         game.addVisual(llave)
@@ -50,6 +55,14 @@ class Nivel{
 		isla.init()
 
         zarek.iniciar()
+        ogro.iniciar()
+        duende.iniciar()
+        puerta.iniciar()
+        arbolRio.iniciar() // Se movieron aca porque al reiniciar, no cargaban correctamente estos elementos.
+
+
+
+
         controlDeColisiones.init()
 
       	keyConfig.init()
@@ -62,6 +75,8 @@ object nivelFacil inherits Nivel (){
 
     override method init(){
         super()
+        reloj.tiempo(75)
+        estado = "jugando"
         game.boardGround("backgroundNivel.png")
         mapping.dibujar(estructuraFacil.estructura())
     }
@@ -70,9 +85,12 @@ object nivelFacil inherits Nivel (){
 object nivelDificil inherits Nivel(){
     var property image = "backgroundNivel.png"
     var property position = game.at(0, 0)
+    
 
     override method init(){
         super()
+        reloj.tiempo(60)
+        estado = "jugando"
         game.addVisual(duende)
 		game.addVisual(triggerDuende)
 
@@ -94,7 +112,12 @@ object gameOver {
         //  keyboard.space().onPressDo({game.clear(); nivelDificil.init()})
         //  keyboard.enter().onPressDo({game.clear(); nivelDificil.init()})
         //  R para reiniciar 25/11/2024
-        keyboard.r().onPressDo({game.clear(); game.stop(); nivelDificil.init(); game.start(); zarek.iniciar()})
+        //keyboard.r().onPressDo({game.clear(); game.stop(); nivelDificil.init(); game.start(); zarek.iniciar()})
+
+        // Se cambio porque iniciaba siempre en nivel dificil, ahora reinicia segun el nivel.
+        keyboard.r().onPressDo({game.clear(); game.stop();
+            if(nivelDificil.estado() == "jugando"){nivelDificil.init()}else{nivelFacil.init()};
+            game.start();})
     }
 }
 

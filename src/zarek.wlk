@@ -22,6 +22,7 @@ object zarek {
         tieneLlave = false
         tieneHacha = false
         position = game.at(6, 6)
+        image = "zarek.png" // Se agrego su imagen al iniciar() para reinicio completo.
         game.addVisual(self)
     }
     
